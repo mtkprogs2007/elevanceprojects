@@ -24,7 +24,8 @@ Each sub-module contains its own entry scripts and environmental configuration d
 ---
 
 ## 🛠️ General Installation & Setup Instructions
-
+* **Processed Datasets & Vector Storage** (For RAG verification):
+  The local context files, tracking matrix tables, and pre-computed FAISS embedding structures can be accessed directly via this verified cloud backup mirror: [Google Drive Shared Folder Link](https://drive.google.com/drive/folders/1oMUXN7jK32La8ZULZs-NUNo_2SazeS5i?usp=sharing)
 To provision your environment to verify these execution scripts, follow these instructions:
 
 ### 1. Set Up Your API Keys
