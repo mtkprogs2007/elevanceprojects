@@ -3,7 +3,13 @@
 Welcome to the primary repository containing my core deliverables for the AI Chatbot Development internship. This repository features six standalone AI engine architectures built to process domain-specific knowledge bases, multimodal visual datasets, and conversational workflows across various local and cloud environments.
 
 ---
+### Download the Core Datasets
+Due to storage constraints and file size limits on GitHub and personal cloud drives, the massive dataset files are omitted from the remote repository tracking structures. You can retrieve them directly from their open-source platforms:
 
+* **arXiv Metadata Snapshot** (For `arxiv_expert_chatbot`): 
+  Download the official 1 GB data stream file (`arxiv-metadata-oai-snapshot.json`) directly from [Kaggle: arXiv Dataset](https://www.kaggle.com/datasets/Cornell-University/arxiv). Place the raw JSON file directly inside your local `arxiv_expert_chatbot/` directory before running the scripts.
+* **Local Knowledge Bases** (For `gemini_chatbot` & `multi-modal`):
+  The target standard reference `dataset.csv` tracking tables are already safely committed directly inside their respective task directories.
 ## 📁 Repository Structure Overview
 
 Each sub-module contains its own entry scripts and environmental configuration definitions:
