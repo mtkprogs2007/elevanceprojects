@@ -21,5 +21,5 @@ Deploying individual conversational nodes and analytical frameworks creates arch
 
 ## Getting Started & Execution
 To initialize the parent workspace panel, launch the master script from the repository root:
-```bash
+
 python -m streamlit run bigapp.py
