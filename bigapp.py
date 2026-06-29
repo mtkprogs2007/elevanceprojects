@@ -37,14 +37,36 @@ target_folder = module_map[task]
 st.title(f"🛠️ Displaying {task}")
 st.write(f"Active Root Workspace: `/{target_folder}`")
 
-# Run child streamlit instances cleanly using a sub-process bridge
+# Explicit file names based on your screenshots
+file_map = {
+    "gemini_chatbot": "main.py",
+    "multi-modal": "main.py",
+    "med_qa_chatbot": "app.py",
+    "arxiv_expert_chatbot": "app.py",
+    "multilingual_chatbot": "app.py",
+    "sentiment_chatbot": "app.py"
+}
+
+# Unique target ports to prevent address conflicts
+port_map = {
+    "gemini_chatbot": "8502",
+    "multi-modal": "8503",
+    "med_qa_chatbot": "8504",
+    "arxiv_expert_chatbot": "8505",
+    "multilingual_chatbot": "8506",
+    "sentiment_chatbot": "8507"
+}
+
 if st.button(f"Launch {target_folder} Module"):
-    script_path = os.path.join(target_folder, "app.py")
-    if not os.path.exists(script_path):
-        script_path = os.path.join(target_folder, "main.py")
-        
-    if os.path.exists(script_path):
-        st.success(f"Spinning up instance on a separate workspace port...")
-        subprocess.Popen([sys.executable, "-m", "streamlit", "run", script_path])
-    else:
-        st.error(f"Could not locate an app.py or main.py entrypoint inside {target_folder}/")
+    # Target absolute base directory paths cleanly
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    target_dir_path = os.path.join(base_dir, target_folder)
+    script_name = file_map[target_folder]
+    
+    st.success(f"Spinning up {target_folder} on port {port_map[target_folder]}...")
+    
+    # Launch sub-process cleanly handling separated directory states
+    subprocess.Popen(
+        [sys.executable, "-m", "streamlit", "run", script_name, "--server.port", port_map[target_folder]],
+        cwd=target_dir_path
+    )

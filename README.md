@@ -1,68 +1,25 @@
-﻿# Internship Project Directory: AI Chatbot Frameworks
+﻿# Integrated Enterprise AI Engineering Suite
 
-Welcome to the primary repository containing my core deliverables for the AI Chatbot Development internship. This repository features six standalone AI engine architectures built to process domain-specific knowledge bases, multimodal visual datasets, and conversational workflows across various local and cloud environments.
+## Problem Statement
+Deploying individual conversational nodes and analytical frameworks creates architectural fragmentation, high operational token overhead, and context isolation. This unified engineering repository addresses these inefficiencies by consolidating six distinct machine learning and large language model pipelines under a centralized dashboard matrix interface (`bigapp.py`).
 
----
-### Download the Core Datasets
-Due to storage constraints and file size limits on GitHub and personal cloud drives, the massive dataset files are omitted from the remote repository tracking structures. You can retrieve them directly from their open-source platforms:
+## Core Portfolio Architecture & Feature Breakdown
 
-* **arXiv Metadata Snapshot** (For `arxiv_expert_chatbot`): 
-  Download the official 1 GB data stream file (`arxiv-metadata-oai-snapshot.json`) directly from [Kaggle: arXiv Dataset](https://www.kaggle.com/datasets/Cornell-University/arxiv). Place the raw JSON file directly inside your local `arxiv_expert_chatbot/` directory before running the scripts.
-* **Local Knowledge Bases** (For `gemini_chatbot` & `multi-modal`):
-  The target standard reference `dataset.csv` tracking tables are already safely committed directly inside their respective task directories.
-## 📁 Repository Structure Overview
+| Module Directory | Feature Scope / Task Experiment | Primary Technical Stack |
+| :--- | :--- | :--- |
+| **gemini_chatbot/** | Task 1: RAG Knowledge base parsing system context strings. | FAISS Vector Store, LangChain, Gemini API |
+| **multi-modal/** | Task 2: Visual reasoning engine analyzing image payloads with context tokens. | Gemini Multi-Modal Vision API, Streamlit |
+| **med_qa_chatbot/** | Task 3: Clinical QA system featuring environment credential routing. | Dotenv, Google GenerativeAI SDK |
+| **arxiv_expert_chatbot/** | Task 4: arXiv Research Discovery engine parsing Kaggle metadata sets. | DataFrames, Snapshot Parsing, Streamlit |
+| **multilingual_chatbot/** | Task 5: Cross-lingual localization and real-time localized synthesis layers. | Regional Translation Maps, Streamlit UI |
+| **sentiment_chatbot/** | Task 6: Sentiment-aware prioritization tracker routing inbound log alerts. | TextBlob/Classifier Analytics, Port Mapping |
 
-Each sub-module contains its own entry scripts and environmental configuration definitions:
+## Methodology & Reproducibility
+* **Preprocessing & Context Truncation:** Raw workspace text data is chunked using semantic tokenizers to prevent database context vector overflow.
+* **API Validation:** Fixed potential 401 request faults by replacing implicit Application Default Credentials (ADC) configurations with explicit local environment loaders.
+* **Session Port Isolation:** Child execution paths run on unique, isolated localhost ports (`8502`–`8507`) to eliminate thread sharing or address assignment conflicts.
 
-* **`arxiv_expert_chatbot/`**: Advanced semantic processing terminal querying and indexing academic research metadata seamlessly.
-* **`gemini_chatbot/`**: Core LLM contextual interface matching retrieval-augmented generation concepts with custom local index storage arrays.
-* **`med_qa_chatbot/`**: Precision clinical QA assistant utilizing medical domain data inputs to serve contextual medical responses.
-* **`multi-modal/`**: Computer vision processing system extracting structural metrics and semantic details directly from image inputs.
-* **`multilingual_chatbot/`**: Real-time localized contextual engine providing dynamic cross-lingual translations without context leakage.
-* **`sentiment_chatbot/`**: Customer emotion processing framework assessing context-driven behavioral trends over long conversation threads.
-
----
-
-## 🛠️ General Installation & Setup Instructions
-* **Processed Datasets & Vector Storage** (For RAG verification):
-  The local context files, tracking matrix tables, and pre-computed FAISS embedding structures can be accessed directly via this verified cloud backup mirror: [Google Drive Shared Folder Link](https://drive.google.com/drive/folders/1oMUXN7jK32La8ZULZs-NUNo_2SazeS5i?usp=sharing)
-To provision your environment to verify these execution scripts, follow these instructions:
-
-### 1. Set Up Your API Keys
-Create a local `.env` file within the folder of the specific task you want to execute using the template below:
-```env
-GOOGLE_API_KEY="your_validated_api_key_here"
-
-```
-
-### 2. Dependency Management
-
-Navigate inside any target sub-directory and install the explicit dependency packages via pip:
-
+## Getting Started & Execution
+To initialize the parent workspace panel, launch the master script from the repository root:
 ```bash
-cd target_chatbot_folder
-pip install -r requirements.txt
-
-```
-
-### 3. Execution Interface
-
-Execute the primary user interface using either standard Python runtimes or Streamlit deployment parameters depending on the specific task design:
-
-```bash
-# For standard scripts
-python main.py
-
-# For web application dashboards
-streamlit run app.py
-
-```
-
----
-
-*Developed as part of the Advanced GenAI and Agentic workflows training framework.*
-
-```
-
----
-
+python -m streamlit run bigapp.py
