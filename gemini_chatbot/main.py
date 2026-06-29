@@ -3,7 +3,8 @@ import streamlit as st
 import google.generativeai as genai
 from PIL import Image
 # Import your RAG function from your helper file
-from langchain_helper import get_qa_chain, add_csv_file_to_db
+#  To this:
+from langchain_helper import get_qa_chain, add_csv_file_to_db, query_relevant_context
 
 # Configure the Google Generative AI SDK using your environment variable
 genai.configure(api_key=os.environ.get("GOOGLE_API_KEY"))
@@ -95,20 +96,23 @@ if user_query:
     st.session_state.chat_history.append({"role": "user", "content": user_query})
     
     # 2. Retrieve matched semantic facts from the vector store using your QA Chain backend
+   
     matched_facts = []
     try:
-        # Assuming get_qa_chain returns your FAISS retriever or vector store reference
-        chain = get_qa_chain()
-        # Retrieve similarities based on the current user text query
-        matched_facts = chain.get_relevant_documents(user_query)
+        # Use your dedicated context retriever function which uses .invoke() internally
+        matched_facts = query_relevant_context(user_query)
     except Exception as e:
         st.warning(f"Vector Retrieval Notification: {str(e)}")
 
     # 3. Process and cleanse document text snippets to remove literal '\n' escape characters
+    
     cleaned_context = ""
     if matched_facts:
-        fact_contents = [doc.page_content for doc in matched_facts if hasattr(doc, 'page_content')]
-        cleaned_context = "\n\n".join(fact_contents).replace("\\n", "\n")
+        if isinstance(matched_facts, str):
+            cleaned_context = matched_facts.replace("\\n", "\n")
+        else:
+            fact_contents = [doc.page_content for doc in matched_facts if hasattr(doc, 'page_content')]
+            cleaned_context = "\n\n".join(fact_contents).replace("\\n", "\n")
 
     # 4. Construct a completely scannable Prompt Template with Guardrails
     guardrail_prompt = f"""
@@ -136,7 +140,7 @@ if user_query:
             content_payload.append(guardrail_prompt)
             
             # Query the production Gemini model engine directly
-            model = genai.GenerativeModel("gemini-1.5-flash")
+            model = genai.GenerativeModel("gemini-2.5-flash")
             prediction = model.generate_content(content_payload)
             
             # 6. Render clean, scannable Markdown output to the user

@@ -15,7 +15,7 @@ load_dotenv()
 # Global Configuration Parameters for Reproducibility
 VECTOR_DB_PATH = "faiss_index"
 EMBEDDING_MODEL_NAME = "all-MiniLM-L6-v2"
-PRIMARY_LLM_MODEL = "gemini-1.5-flash"
+PRIMARY_LLM_MODEL = "gemini-2.5-flash"
 
 # Initialize a modern, stable HuggingFace embedding model
 instructor_embeddings = HuggingFaceEmbeddings(model_name=EMBEDDING_MODEL_NAME)
@@ -85,8 +85,30 @@ def get_qa_chain(experiment_mode="advanced"):
     PROMPT = PromptTemplate(template=prompt_template, input_variables=["context", "question"])
 
     # Modern LCEL execution graph linkage
+    # Format fetched chunks cleanly into text before passing to the prompt
+   #  NEW ROBUST RECOVERY PARSER
+    def format_docs(docs):
+        # Handle cases where docs might be a dictionary or structured object
+        if isinstance(docs, dict):
+            return str(docs.get("query", docs))
+            
+        formatted_pieces = []
+        for doc in docs:
+            # If the item inside the list is a dictionary, grab its content string safely
+            if isinstance(doc, dict):
+                formatted_pieces.append(str(doc.get("page_content", str(doc))))
+            elif hasattr(doc, "page_content"):
+                formatted_pieces.append(doc.page_content)
+            else:
+                formatted_pieces.append(str(doc))
+                
+        return "\n\n".join(formatted_pieces)
+
     base_chain = (
-        {"context": retriever, "question": RunnablePassthrough()}
+        {
+            "context": retriever | format_docs, 
+            "question": RunnablePassthrough()
+        }
         | PROMPT
         | llm
         | StrOutputParser()
